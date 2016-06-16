@@ -1,0 +1,38 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Build	Makefile	/^define Build\/Compile$/;"	m	language:Make
+Build	Makefile	/^define Build\/Prepare$/;"	m	language:Make
+KernelPackage	Makefile	/^define KernelPackage\/key_gpio-cdrv$/;"	m	language:Make
+PKG_NAME	Makefile	/^PKG_NAME:=key_gpio-cdrv$/;"	m	language:Make
+PKG_VERSION	Makefile	/^PKG_VERSION:=1.0$/;"	m	language:Make
+active_low	src/key_gpio-cdrv.c	/^    int active_low;$/;"	m	language:C	struct:jansion_key	file:
+code	src/key_gpio-cdrv.c	/^    int code;$/;"	m	language:C	struct:jansion_key	file:
+desc	src/key_gpio-cdrv.c	/^    const char* desc;$/;"	m	language:C	struct:jansion_key	file:
+disabled	src/key_gpio-cdrv.c	/^    bool disabled;$/;"	m	language:C	struct:gpio_key_data	file:
+gpio	src/key_gpio-cdrv.c	/^    int gpio;$/;"	m	language:C	struct:jansion_key	file:
+gpio_key_data	src/key_gpio-cdrv.c	/^struct gpio_key_data {$/;"	s	language:C	file:
+gpio_keys_get_devtree_pdata	src/key_gpio-cdrv.c	/^static struct jansion_key_t *gpio_keys_get_devtree_pdata(struct device *dev){$/;"	f	language:C	file:	signature:(struct device *dev)
+gpio_keys_irq_timer	src/key_gpio-cdrv.c	/^static void gpio_keys_irq_timer(unsigned long arg){$/;"	f	language:C	file:	signature:(unsigned long arg)
+gpio_keys_work_queue_func	src/key_gpio-cdrv.c	/^static void gpio_keys_work_queue_func(struct work_struct *work){$/;"	f	language:C	file:	signature:(struct work_struct *work)
+input	src/key_gpio-cdrv.c	/^    struct input_dev *input;$/;"	m	language:C	struct:gpio_key_data	typeref:struct:gpio_key_data::input_dev	file:
+irq	src/key_gpio-cdrv.c	/^    int irq;$/;"	m	language:C	struct:gpio_key_data	file:
+jansion_key	src/key_gpio-cdrv.c	/^typedef struct  jansion_key{$/;"	s	language:C	file:
+jansion_key_t	src/key_gpio-cdrv.c	/^}jansion_key_t;$/;"	t	language:C	typeref:struct:jansion_key	file:
+jkey	src/key_gpio-cdrv.c	/^    jansion_key_t *jkey;$/;"	m	language:C	struct:gpio_key_data	file:
+key_16_dev	src/key_gpio-cdrv.c	/^static struct input_dev *key_16_dev;$/;"	v	language:C	typeref:struct:input_dev	file:
+key_16_driver	src/key_gpio-cdrv.c	/^static struct platform_driver  key_16_driver = {$/;"	v	language:C	typeref:struct:platform_driver	file:
+key_16_exit	src/key_gpio-cdrv.c	/^static void __exit key_16_exit(){$/;"	f	language:C	file:
+key_16_init	src/key_gpio-cdrv.c	/^static int __init key_16_init(void){$/;"	f	language:C	file:	signature:(void)
+key_16_probe	src/key_gpio-cdrv.c	/^int key_16_probe(struct platform_device *key_device){$/;"	f	language:C	signature:(struct platform_device *key_device)
+key_16_remove	src/key_gpio-cdrv.c	/^int key_16_remove(struct platform_device *key_device){$/;"	f	language:C	signature:(struct platform_device *key_device)
+key_interrupt	src/key_gpio-cdrv.c	/^static void key_interrupt(int irq, void *dummy, struct pt_regs *fp){$/;"	f	language:C	file:	signature:(int irq, void *dummy, struct pt_regs *fp)
+key_pressed	src/key_gpio-cdrv.c	/^    bool key_pressed;$/;"	m	language:C	struct:gpio_key_data	file:
+lock	src/key_gpio-cdrv.c	/^    spinlock_t lock;$/;"	m	language:C	struct:gpio_key_data	file:
+timer	src/key_gpio-cdrv.c	/^    struct timer_list timer;$/;"	m	language:C	struct:gpio_key_data	typeref:struct:gpio_key_data::timer_list	file:
+timer_debounce	src/key_gpio-cdrv.c	/^    unsigned int timer_debounce;	\/* in msecs *\/$/;"	m	language:C	struct:gpio_key_data	file:
+value	src/key_gpio-cdrv.c	/^    int value;$/;"	m	language:C	struct:jansion_key	file:
+work	src/key_gpio-cdrv.c	/^    struct work_struct work;$/;"	m	language:C	struct:gpio_key_data	typeref:struct:gpio_key_data::work_struct	file:

@@ -1,0 +1,65 @@
+cscope 15 $HOME/mtk-7688-duo/openwrt/package/kernel/dfrobot_drivers/key_gpio/src -q 0000000015 0000000380
+	@key_gpio-cdrv.c
+
+2 
+	~<lšux/gpiÞib.h
+>
+
+7 
+šput_dev
+ *
+	gkey_16_dev
+;
+
+11 
+	$key_š‹¼u±
+(
+œq
+, *
+dummy
+, 
+±_»gs
+ *
+å
+){
+
+15 
+	`šput_»pÜt_key
+();
+
+18 
+	}
+}
+
+28 
+__š™
+ 
+	$key_16_š™
+(){
+
+35 
+	}
+}
+
+37 
+__ex™
+ 
+key_16_ex™
+();
+
+42 
+Ï‹_š™ÿÎ
+();
+
+43 
+moduË_š™
+();
+
+	@
+1
+.
+1
+/usr/include
+1
+16
+key_gpio-cdrv.c
