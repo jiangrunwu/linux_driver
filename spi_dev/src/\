@@ -1,0 +1,10 @@
+
+
+
+
+
+spi_register_board_info();
+struct spi_transfer
+spi_message_init
+spi_new_device
+

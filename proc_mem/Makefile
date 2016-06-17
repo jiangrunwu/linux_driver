@@ -4,16 +4,16 @@ include $(INCLUDE_DIR)/package.mk
 
 
 
-PKG_NAME:=key_gpio-cdrv
+PKG_NAME:=proc_mem-cdrv
 PKG_VERSION:=1.0
 
 
-define KernelPackage/key_gpio-cdrv
+define KernelPackage/proc_mem-cdrv
   SUBMENU:=Dfrobot drivers
-  TITLE:=key_gpio-cdrv for control mt6788's #16
-  FILES:=$(PKG_BUILD_DIR)/key_gpio-cdrv.ko
+  TITLE:=proc_mem-cdrv for control mt6788's #16
+  FILES:=$(PKG_BUILD_DIR)/proc_mem-cdrv.ko
   #DEPENDS+=kmod-i2c-core
-  #AUTOLOAD:=$(call AutoLoad, 21, key_gpio-cdrv)
+  #AUTOLOAD:=$(call AutoLoad, 21, proc_mem-cdrv)
 endef
 
 
@@ -37,6 +37,6 @@ define Build/Compile
 endef
 
 
-$(eval $(call KernelPackage,key_gpio-cdrv))
+$(eval $(call KernelPackage,proc_mem-cdrv))
 
 

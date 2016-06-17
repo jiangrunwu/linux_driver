@@ -4,7 +4,6 @@
 #include <linux/miscdevice.h>
 #include <linux/types.h>
 #include <linux/fs.h>
-#include <asm/io.h>
 
 
 
@@ -19,11 +18,9 @@
 #define GPIO_HIGH               1
 #define GPIO_LOW                0
 
-volatile unsigned int led21_mod_reg;
-volatile unsigned int led21_base_reg;
+volatile unsigned int *led21_mod_reg;
+volatile unsigned int *led21_base_reg;
 
-unsigned int *vled21_mod_reg;
-unsigned int *vled21_base_reg;
 
 //define some command micro
 #define RALINK_REG(offset)            (*(volatile unsigned int *)(offset)) 
@@ -134,93 +131,26 @@ int led_release(struct inode *minode, struct file *filp){
 long led_ioctl(struct file *filp, unsigned int cmd, unsigned long arg){
 
     int tmp;
-
-    printk("----------------------start-------------------------\n");
-    printk("led21_mod_reg = %x\n", led21_mod_reg);
-    printk("led21_base_reg = %x\n", led21_base_reg);
-
-    printk("led21_mod_reg = %p\n", vled21_mod_reg);
-    printk("led21_base_reg = %p\n", vled21_base_reg);
-
-
-
-
-    led21_mod_reg =  0x10000060;
-    led21_base_reg = 0x10000600;
-   
-
-    vled21_mod_reg = ioremap(led21_mod_reg,  4);
-    vled21_base_reg= ioremap(led21_base_reg,  0x50);
-
-
-    printk("led21_mod_reg = %x\n", led21_mod_reg);
-    printk("led21_base_reg = %x\n", led21_base_reg);
-
-    printk("led21_mod_reg = %p\n", vled21_mod_reg);
-    printk("led21_base_reg = %p\n", vled21_base_reg);
-
-
-    printk("----------------------end-------------------------\n");
-
-
-
     switch(cmd){
-
-        case LED_OFF:
-            printk("lend OFF!\n"); 
-
-            tmp = readl(vled21_base_reg + 0x20);      
-            printk("DATA = %x!\n", tmp); 
-
-            tmp = 0; 
-            tmp |= (1 << 16);
-            writel(tmp, vled21_base_reg + PIO_DSET0);
-
-            tmp = readl(vled21_base_reg + 0x20);      
-            printk("DATA = %x!\n", tmp); 
-
-            /*
-               tmp = readl(vled21_base_reg + PIO_DSET0);      
-               printk("DCLR0 f= %x!\n", tmp); 
-
-               tmp |=(1 << 16);
-
-               writel(tmp, vled21_base_reg + PIO_DSET0);
-
-               printk("DATA = %x!\n", tmp); 
-
-               tmp = readl(vled21_base_reg + 0x20);      
-               printk("DCLR0 b= %x!\n", tmp); 
-               */
-
-
-
-            break;
+    
         case LED_ON:
-            printk("led ON!\n"); 
-
-
-            tmp = readl(vled21_base_reg + 0x20);      
-            printk("DATA = %x!\n", tmp); 
-
-            tmp |=(1 << 16);
-            writel(tmp, vled21_base_reg + 0x20);
-
-            tmp = 0;
-            tmp |=(1 << 16);
-            writel(tmp, vled21_base_reg + PIO_DCLR0);
-
-            tmp = readl(vled21_base_reg + 0x20);      
-            printk("DATA = %x!\n", tmp); 
-
-
-            break;
-
+                printk("lend ON!\n"); 
+                tmp = readl(led21_base_reg + PIO_DCLR0);      
+                tmp |= 1 << 0;
+                writel(tmp, led21_base_reg + PIO_DCLR0);
+                break;
+        case LED_OFF:
+                printk("led OFF!\n"); 
+                tmp = readl(led21_base_reg + PIO_DSET0);      
+                tmp &=~ 1 << 0;
+                writel(tmp, led21_base_reg + PIO_DSET0);
+                break;
+    
         default:
-            printk("Error command!\n");
-            break;
-
-
+                printk("Error command!\n");
+                break;
+    
+    
     }
 
     return 0;
@@ -272,6 +202,14 @@ static int __init gpio_init(void){
     int ret;
     int tmp;
     
+
+
+    printk("----GPIO misc test init ----\n");
+
+    /*
+     * the main device ID of the miscdevice is 10, and the second device ID is used to tell device. 
+     *
+     */
     ret = misc_register(&mt7688_led_misc);
     if (ret < 0){
         printk("Register Error!\n"); 
@@ -279,44 +217,36 @@ static int __init gpio_init(void){
     
     }
 
-    led21_mod_reg =  0x10000060;
-    led21_base_reg = 0x10000600;
-   
 
-    vled21_mod_reg = ioremap(led21_mod_reg,  4);
-    vled21_base_reg= ioremap(led21_base_reg,  0x50);
+    /*
+     * init char device 
+     *
+     */
 
+    led21_mod_reg =  0xB0000060;
+    led21_base_reg = 0xB0000600;
+
+
+    printk("led21_mod_reg = %p\n", led21_mod_reg);
+    printk("led21_base_reg = %p\n", led21_base_reg);
+    printk("helo = %p\n", &helo);
 
     printk("led21_mod_reg = %x\n", led21_mod_reg);
     printk("led21_base_reg = %x\n", led21_base_reg);
-    printk("helo = %p\n", &helo);
-
-    printk("led21_mod_reg = %p\n", vled21_mod_reg);
-    printk("led21_base_reg = %p\n", vled21_base_reg);
 
     //config the gpio18 into gpio mode
-    tmp = readl(vled21_mod_reg);
+    //tmp = readl(led21_mod_reg);
     
-    printk("mod_reg f = %x\n", tmp);
-
-    tmp &=~(3 << 2); 
-    tmp |=( 1<< 2); 
-    writel(tmp, vled21_mod_reg);
-
-    tmp = readl(vled21_mod_reg);
-    printk("mod_reg b = %x\n", tmp);
+    //tmp &=~(3 << 10); 
+    //tmp |=(1 << 10); 
+    //writel(tmp, led21_mod_reg);
 
     //config the gpio18 into output mode
- 
-    tmp = readl(vled21_base_reg);
-    printk("mod_reg f= %x\n", tmp);
+    tmp = readl(led21_base_reg); 
+    tmp &=~(1 << 0);
+    tmp |=(1 << 0);
 
-    tmp |=(1 << 16);
-    printk("move = %x\n", tmp);
-    writel(tmp, vled21_base_reg);
-
-    tmp = readl(vled21_base_reg);
-    printk("mod_reg b= %x\n", tmp);
+    writel(tmp, led21_base_reg);
 
 
 
